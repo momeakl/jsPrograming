@@ -1,5 +1,3 @@
 # jsPrograming
 daly testing
-## Add something about this
-哈喽
-## 这是一个标题
+## This is a respository about js testing
