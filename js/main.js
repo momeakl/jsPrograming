@@ -29,7 +29,6 @@ JavaScript面对对象编程指南 知识总结
 20.ES6常用语法回顾以及es7的一些语法 vue-router 生命周期
 21.js的几种继承方式 原型链继承 借用构造函数继承 组合式继承
 22.js变量命名按照单词之间下划线拼接，函数名按照驼峰形式 便于分辨哪个是变量哪个是函数名。
-js jq vue es6 gulp webpack
 23.用if检测变量是否存在时使用typeof someVar !== 'undefined'替换if(someVar)
 24.
 */
