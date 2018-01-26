@@ -1,14 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+任务目的
+学习与实践JavaScript的基本语法、语言特性
+练习使用JavaScript实现简单的排序算法
+任务描述
+基于上一任务
+限制输入的数字在10-100
+队列元素数量最多限制为10个，当超过10个时，添加元素时alert出提示
+队列展现方式变化如图，直接用高度表示数字大小
+实现一个简单的排序功能，如冒泡排序（不限制具体算法），用可视化的方法表达出来，参考见下方参考资料
+1.valueOf()和toString()的区别是前者返回原对象，后者返回转化后的字符串
+2.switch语句的根本目的就是为了防止出现if-else if语句的滥用  而且好处是 case 后面不止可以跟变量，还可以是表达式
+3.js中五中基本数据类型undefined,null,string,boolean,number, 引用类型是指那些可能由多个值构成的对象。
+3.typeof 返回的值的类型有：Object,funciton,string,boolean,number,undefined
+splice,slice,substr,subString,split,valueOf(),typeof,instanceOf,toString,valueOf,join, concact,sort,reverse,
+indexOf,lastIndexOf,trim(),charAt,match,Math.max,Math.round,Math.random
+4.模式匹配方法match eg: str.match(/\d+/g) 返回匹配的数组
+4.js中么有块级作用域
+5.数组的常用迭代方法every\some\filter\map\foreach\  都是三个参数（item,index,array）
+  every返回每一个都通是true才返回true,some返回的任何一个都是true时返回true
+  filter返回筛选通过的数组的集合
+  map返回整合处理之后的数组的集合
+  foreach没有返回值
+6.函数内的两个特殊内部属性 arguments和this，
+  其中arguments.callee属性是个指针，指向拥有arguments对象的函数。
+  this引用的是函数据以执行的环境对象
+7.函数的名字仅仅是一个包含指针的变量而已。
+8.函数的属性与方法：属性——每个函数包含两个属性：length(函数参数个数)，prototype属性（待补充）
+    非继承而来的方法：apply()和call()  用途：在特定的作用域中调用函数，都是有两个参数,作用：扩充作用域
+    第一个参数都是设置函数体内this对象的值，不同点事apply第二个参数是数组或arguement,call是其余参数全部传递。
+    window.color = red;
+    var o = {color:'blue'};
+    function sayColor(){alert(this.color);};
+    sayColor();              //red
+    sayColor.call(this);     //red
+    sayColor.call(window);   //red
+    sayColor.call(o);        //blue
+9.ES5新增的方法： bind()方法  方法会创建一个函数的实例，把this值绑定到传给bind()函数的值
+    var newObject = sayColor.bind(o);
+    newObject();             //blue
+10.基本包装类型：Number,String,Boolean
+     number提供了一个toFixed(num)方法  返回指定的小数位
+     String字符方法：charAt()、charCodeAt()、concat() concat()用于将一个或多个字符串拼接起来
+     但实践中用的最多的还是+号拼接。
+11.string还提供三个基于自字符串创建新字符串的方法 slice(允许为负值),substring(不允许),substr(),
+     三个方法都会返回操作字符串的一个子字符串，都接收一个或两个参数,
+     前两者参数都是[开始位置，结束位置]，substr是[开始位置，返回的字符个数]
+12.字符串位置方法：indexOf(string,开始位置)和lastIndexOf(),接收一个或两个参数，返回匹配字符的位置，否则返回-1
+        trim()方法，创建一个字符串的副本，删除前置以及后缀的所有空格，返回结果。
+13.大小写转换方法 toLowerCase()和toUpperCase()
+14.两个单体内置对象 Global和Math  Math对象的方法，常用的有min()和max()
+15.defineProperty()方法是用来修改对象属性默认的特性，vue数据双向绑定就是借此实现的
+   属性有两种 数据属性和访问器属性
+16.创建对象的几种模式--工厂模式、构造函数模式、原型模式，最常使用的是组合使用构造函数模式和原型模式。
+17.构造函数的第一个字母通常大写。
+18.函数表达式部分（暂时）略过，函数提升、函数表达式、递归、闭包、this、模仿块级作用域、私有变量等等。
+19.insertBefore(newNode,position),当positon值为Null时,执行跟appendChild(newNode)相同的操作。
+20.event属性  阻止默认行为 e.preventDefault() 阻止冒泡 e.stopPropagation()
+21.money time electric salaryChange  salarydate  2
+-->
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            background: #f5f5f5;
+            font-family: 'microsoft yahei';
+        }
+        .wrapper {
+            background: #fff;
+            width: 80%;
+            height: 500px;
+            margin: 120px auto;
+            padding: 60px;
+        }
+        ul {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-end;
+            min-height: 180px;
+        }
+        button {
+            margin-right: 20px;
+        }
+        input {
+            height: 25px;
+            width: 150px;
+            margin-right: 30px;
+        }
+        .form {
+            margin-top: 20px;
+        }
+        .num {
+            margin-top: 30px;
+        }
+        .num li {
+            display: inline-block;
+            margin-right: 15px;
+            width: 60px;
+            height: 60px;
+            background: #f80202;
+            text-align: center;
+            padding-bottom: 50px;
+            transition: all 2s;
+        }
+        .num li a {
+            display: block;
+            height: 100%;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
 </head>
+
+<!--vue.js利用ES5中的defineProperty来实现数据双向绑定-->
+
+<!--<body>
+    <div id="test">这是一个测试</div>
+    <script>
+        var view = document.getElementById("test");
+        var data = {};
+        var i = 0;
+        Object.defineProperty(data, "b", {
+            set: function (newValue) {
+                //当data.b的值改变的时候更新＃test的视图
+                view.textContent = newValue;
+            },
+            get: function () {}
+        });
+        data["b"] = "data.b的值更新了，我要更新视图";
+        /*setInterval(function () {
+            i++;
+            data["b"] = "data.b的值更新了，我要更新视图" + i;
+        }, 1000);*/
+    </script>
+</body>-->
+
 <body>
-    <h1>Title</h1>
-    <p>hello</p>
-    <p>hello</p>
-    <p>hello</p>
+    <div class="wrapper">
+        <h3>模拟队列</h3>
+
+        <div class="form">
+            <input placeholder="请输入10-100" type="text" id="input" />
+            <button id="leftIn">左侧入</button>
+            <button id="rightIn">右侧入</button>
+            <button id="leftOut">左侧出</button>
+            <button id="rightOut">右侧出</button>
+            <button id="orderUp">从小到大排序</button>
+            <button id="orderDown">从大到小排序</button>
+        </div>
+
+        <ul id="numList" class="num">
+
+        </ul>
+
+    </div>
+    <script src="js/EventUtil.js"></script>
+    <script>
+        /*=====js中对象的方法集中整理=====*/
+        /*=====Array对象方法=====*/
+
+        //push(),pop(),unshift(),shift(),toString(),toLocaleString(),valueOf(),reverse()
+        /*slice
+        slice(start(可以为负),end(可选))  返回值 不会改变原数组 返回一个截取的数组
+        */
+        function slice1{
+            var arr = ['one','two','three'];
+            var arr_new = arr.slice(1);
+            var arr_2 = arr.slice(1,3);
+            var arr_2 = arr.slice(-2);
+        }
+        /*splice   array对象
+        splice(index,howmany, item1,..,itemX)  返回值 改变原数组 返回的是被删除元素组成的数组。
+        */
+
+        /*sort   array对象
+        sort(function(a,b){return a - b;})  返回值 对数组的引用。请注意，数组在原数组上进行排序
+        */
+
+        /*concat
+        arr.concat(array1,array2,array3...) 返回值 将括号中的数组添加到arr数组中
+        */
+
+        /*join
+        arrayObject.join(separator(可选))  返回值 将数组中的元素拼接成一个字符串
+        */
+
+        /*=====String对象方法=====*/
+
+        //
+        /*substring(start,stop(不包含))   String对象
+        splice(start,stop(不包含))  返回值 不会改变原数组 返回一个截取的数组
+        */
+
+        var input = document.getElementById('input');
+        var numList = document.getElementById('numList');
+         //正则验证输入框为数字
+        var reg = new RegExp("^[0-9]*$");
+        //从小到大排序
+        function Up(){
+            for(var i = 0; i < numList.children.length; i ++){
+                var order = numList.childNodes[i].getAttribute('height');
+                numList.children[i].setAttribute('style','order:'+order);
+            }
+        }
+        /**
+         * 通用的获取值getData方法
+         */
+        function getData() {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            if (input.value.replace(/(^s*)|(s*$)/g, "").length == 0) {
+                alert('输入值不能为空');
+                input.focus();
+                return false;
+            } else if (!reg.test(input.value)) {
+                alert('输入值须是数字');
+                input.value = '';
+                input.focus();
+                return false;
+            } else if (!(input.value >= 10 && input.value <= 100)) {
+                alert('数字需在10-100');
+                input.value = '';
+                input.focus();
+                return false;
+            } else {
+                a.innerHTML = input.value;
+                a.setAttribute('href', 'javascript:');
+                a.setAttribute('onclick', "javascript:alert('确定要删除?');var parent=this.parentNode;numList.removeChild(parent)");
+                li.appendChild(a);
+                li.setAttribute('style', 'height:' + input.value + 'px');
+                return li;
+            }
+
+        }
+        /**
+         * 左侧入leftIn方法
+         */
+        function leftIn() {
+            var data = getData();
+            if (data) {
+                var length = numList.children.length + 1;
+                if (length < 11) {
+                    numList.insertBefore(data, numList.childNodes[0]);
+                    input.value = '';
+                    input.focus();
+                } else {
+                    alert('最多输入十个！');
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        }
+        /**
+         * 右侧入rightIn方法
+         */
+        function rightIn() {
+            var data = getData();
+            if (data) {
+                var length = numList.children.length + 1;
+                if (length < 11) {
+                    numList.appendChild(data);
+                    input.value = '';
+                    input.focus();
+                } else {
+                    alert('最多输入十个！');
+                    return false;
+                }
+            } else {
+                return false;
+            }
+
+        }
+        /**
+         * 左侧删除leftOut方法
+         */
+        function leftOut() {
+            if (numList.childNodes.length > 1) {
+                var child = numList.childNodes[0];
+                alert(child.childNodes[0].innerHTML);
+                numList.removeChild(child);
+            }
+        }
+        /**
+         * 右侧删除rightOut方法
+         */
+        function rightOut() {
+            if (numList.childNodes.length > 1) {
+                var child = numList.lastChild;
+                alert(child.childNodes[0].innerHTML);
+                numList.removeChild(child);
+            }
+        }
+
+        //比较对象内字符的大小
+        function createComparison(propertyName){
+            return function(object1,object2){
+                var value1 = object1[propertyName];
+                var value2 = object2[propertyName];
+                if(value1<value2){
+                    return -1;
+                }
+                else if(value1>value2){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            }
+        }
+        //阶乘函数  递归
+        function factorial(num){
+            if(num<=1){
+                return 1;
+            }
+            else{
+                console.log(num);
+                return num*factorial(num-1);
+            }
+        }
+        factorial(5);
+
+
+        var inLeft = document.getElementById('leftIn');
+        var outLeft = document.getElementById('leftOut');
+        var inRight = document.getElementById('rightIn');
+        var outRight = document.getElementById('rightOut');
+
+        EventUtil.addHandler(inLeft, 'click', leftIn);
+        EventUtil.addHandler(inRight, 'click', rightIn);
+        EventUtil.addHandler(outLeft, 'click', leftOut);
+        EventUtil.addHandler(outRight, 'click', rightOut);
+        EventUtil.addHandler(orderUp, 'click', Up);
+    </script>
 </body>
 
 </html>
