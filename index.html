@@ -164,41 +164,57 @@ indexOf,lastIndexOf,trim(),charAt,match,Math.max,Math.round,Math.random
     </div>
     <script src="js/EventUtil.js"></script>
     <script>
-        /*=====js中对象的方法集中整理=====*/
+        /*+++++++++++js中对象的方法集中整理++++++++++*/
+        //javascript中的对象 Array, String, Boolean, Number, Function, Date, Math, RegExp, Events
+
         /*=====Array对象方法=====*/
 
         //push(),pop(),unshift(),shift(),toString(),toLocaleString(),valueOf(),reverse()
-        /*slice
-        slice(start(可以为负),end(可选))  返回值 不会改变原数组 返回一个截取的数组
-        */
-        function slice1{
-            var arr = ['one','two','three'];
-            var arr_new = arr.slice(1);
-            var arr_2 = arr.slice(1,3);
-            var arr_2 = arr.slice(-2);
-        }
-        /*splice   array对象
-        splice(index,howmany, item1,..,itemX)  返回值 改变原数组 返回的是被删除元素组成的数组。
-        */
 
-        /*sort   array对象
-        sort(function(a,b){return a - b;})  返回值 对数组的引用。请注意，数组在原数组上进行排序
-        */
+        /*slice
+        slice(start(可以为负),end(可选))  返回值 不会改变原数组 返回一个截取的数组      */
+
+        /*splice
+        splice(index,howmany, item1,..,itemX)  返回值 改变原数组 返回的是被删除元素组成的数组。   */
+
+        /*sort
+        sort(function(a,b){return a - b;})  返回值 对数组的引用。请注意，数组在原数组上进行排序    */
 
         /*concat
-        arr.concat(array1,array2,array3...) 返回值 将括号中的数组添加到arr数组中
-        */
+        arr.concat(array1,array2,array3...) 返回值 将括号中的数组添加到arr数组中    */
 
         /*join
-        arrayObject.join(separator(可选))  返回值 将数组中的元素拼接成一个字符串
-        */
+        arrayObject.join(separator(可选))  返回值 将数组中的元素拼接成一个字符串  */
 
         /*=====String对象方法=====*/
 
-        //
-        /*substring(start,stop(不包含))   String对象
-        splice(start,stop(不包含))  返回值 不会改变原数组 返回一个截取的数组
-        */
+        //charAt(), charCodeAt(), concat(), slice(), indexOf(), lastIndexOf(), match()
+        //replace(), search(), split(), substr(), substring(), toLowerCase(), toUpperCase()
+
+        /*anchor()   创建html锚点  eg: stringObject.anchor(anchorname)
+        var texts = 'momeakl';  texts.anchor("myanchor")
+        返回=> "<a name="myanchor">momeakl</a>"       */
+
+        /*substring()
+        substring(start,stop(不包含))  返回值 不会改变原数组 返回一个截取的数组       */
+
+        /*substr()
+        substr(start,length(可选)) 返回值 不会改变原数组 返回一个截取的数组       */
+
+        /*split()       用于把一个字符串分割成字符串数组。
+        split(separator,howmany(可选))  返回值  返回一个字符串数组       */
+
+        /*=====Date对象方法=====*/
+
+        //Date()  返回当日的日期和函数
+        //getDate()  返回当月的日期（1~31） eg:var d = new Date(); d.getDate()  => 26
+        //getDay()  返回一周中的某一天(0 ~ 6)
+        //getMonth()  返回月份(0 ~ 11)
+        //getFullYear()  返回四位数年份
+        //getHours()  返回Date对象的小时(0~23)
+        //getMinutes()  返回Date对象的分钟(0~59)
+        //getSeconds()  返回Date对象的秒数(0~59)
+
 
         var input = document.getElementById('input');
         var numList = document.getElementById('numList');
